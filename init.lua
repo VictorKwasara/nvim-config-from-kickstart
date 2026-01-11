@@ -124,6 +124,8 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 
+-- Show colors in your css  11 jan 2026 vtk
+vim.opt.termguicolors = true
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -284,6 +286,12 @@ require('lazy').setup({
     },
   },
 
+  {
+    'brenoprata10/nvim-highlight-colors',
+    config = function()
+      require('nvim-highlight-colors').setup {}
+    end,
+  },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -896,26 +904,41 @@ require('lazy').setup({
       signature = { enabled = true },
     },
   },
+  {
+    'aurum77/live-server.nvim',
+    cmd = { 'LiveServer', 'LiveServerStart', 'LiveServerStop' },
+    -- Run an installation script after cloning the repo (optional)
+    run = function()
+      require('live_server.util').install()
+    end,
+  },
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+    -- 'folke/tokyonight.nvim',
+    'oskarnurm/koda.nvim',
+    -- 'sainnhe/gruvbox-material',
+    -- 'f4z3r/gruvbox-material.nvim',
+    lazy = false,
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
+      require('koda').setup {
         styles = {
           comments = { italic = false }, -- Disable italics in comments
+          background = {
+            transparent = false, -- Set to true for a transparent background
+          },
         },
       }
 
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'koda'
     end,
   },
 
